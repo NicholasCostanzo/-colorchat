@@ -49,10 +49,15 @@ app.get('/test', (req, res) => {
  * SOCKETS *
  **********/
 
-io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' })
-  socket.on('my other event', function (data) {
-    console.log(data)
+io.on('connection', (socket) => {
+  console.log('user connected')
+
+  socket.on('add-message', (message) => {
+    io.emit('message', message)
+  })
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
   })
 })
 
